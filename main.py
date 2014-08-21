@@ -140,7 +140,7 @@ def contact_form(sender, subject, email, text):
 	           subject.encode('utf-8'),
 	           text.encode('utf-8'))
 
-	message = mail.EmailMessage(sender="{0} <contact@{1}>".format(sender, "ramutahome2.appspot.com"),
+	message = mail.EmailMessage(sender="Ramuta.me <matt@ramuta.me>",
 	                            to="matej.ramuta@gmail.com",
 	                            subject="Novo sporocilo na ramuta.me",
 	                            body=message_body,
