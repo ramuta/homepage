@@ -13,24 +13,26 @@
 				<h3>CONTACT ME</h3>
 				<hr>
 				<p>Please contact me if you have any question, business proposal or even a job offer :)</p>
+                <p style="color: red;">{{ error }}</p>
 			</div>
 		</div>
 		<div class="row mt">	
 			<div class="col-lg-8 col-lg-offset-2">
-				<form role="form">
+				<form role="form" action="/contact" method="post">
+                    <input type="hidden" name="hidden">
 				  <div class="form-group">
-				    <input type="name" class="form-control" id="NameInputEmail1" placeholder="Your Name">
+				    <input type="name" class="form-control" id="NameInputEmail1" placeholder="Your Name" name="sender">
 				    <br>
 				  </div>
 				  <div class="form-group">
-				    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+				    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" name="email">
 				    <br>
 				  </div>
 				  <div class="form-group">
-				    <input type="email" class="form-control" id="subjectEmail1" placeholder="Subject">
+				    <input type="text" class="form-control" id="subjectEmail1" placeholder="Subject" name="subject">
 				    <br>
 				  </div>
-				  <textarea class="form-control" rows="6" placeholder="Enter your text here"></textarea>
+				  <textarea class="form-control" rows="6" placeholder="Enter your text here" name="text"></textarea>
 				    <br>
 				  <button type="submit" class="btn btn-success">SUBMIT</button>
 				</form>    			
