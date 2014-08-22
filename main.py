@@ -48,11 +48,11 @@ class Handler(webapp2.RequestHandler):
 
 class MainHandler(Handler):
 	def get(self):
-		params = {}
+		posts = BlogPost.query().order(-BlogPost.datetime).fetch()
+		params = {"posts": posts}
 		cookie = self.request.cookies.get("user_id", "0")
 		if cookie:
 			if check_cookie_hash(cookie):
-				posts = BlogPost.query().order(-BlogPost.datetime).fetch()
 				params = {"hello": "Hello, Matej", "posts": posts}
 		self.render_template('index.html', params)
 
