@@ -42,6 +42,10 @@ class Handler(webapp2.RequestHandler):
 	def render_template(self, view_filename, params=None):
 		if not params:
 			params = {}
+		cookie = self.request.cookies.get("user_id", "0")
+		if cookie:
+			if check_cookie_hash(cookie):
+				params["hello"] = "Hello, Matej"
 		t = jinja_env.get_template(view_filename)
 		self.write(t.render(params))
 
@@ -50,52 +54,36 @@ class MainHandler(Handler):
 	def get(self):
 		posts = BlogPost.query().order(-BlogPost.datetime).fetch()
 		params = {"posts": posts}
-		cookie = self.request.cookies.get("user_id", "0")
-		if cookie:
-			if check_cookie_hash(cookie):
-				params = {"hello": "Hello, Matej", "posts": posts}
 		self.render_template('index.html', params)
 
 
 class AboutHandler(Handler):
 	def get(self):
-		params = {}
-		cookie = self.request.cookies.get("user_id", "0")
-		if cookie:
-			if check_cookie_hash(cookie):
-				params = {"hello": "Hello, Matej"}
-		self.render_template('about.html', params)
+		self.render_template('about.html')
 
 
 class NewPostHandler(Handler):
 	def get(self):
-		params = {}
 		cookie = self.request.cookies.get("user_id", "0")
 		if cookie:
 			if check_cookie_hash(cookie):
-				params = {"hello": "Hello, Matej"}
-				return self.render_template('newpost.html', params)
+				return self.render_template('newpost.html')
+		self.render_template("login.html")
 
 	def post(self):
-		params = {}
 		cookie = self.request.cookies.get("user_id", "0")
 		if cookie:
 			if check_cookie_hash(cookie):
 				title = self.request.get("title")
 				text = self.request.get("text")
 				BlogPost.create(title, text)
-				params = {"hello": "Hello, Matej"}
-		self.render_template('index.html', params)
+				return self.render_template('index.html')
+		self.render_template("login.html")
 
 
 class ContactHandler(Handler):
 	def get(self):
-		params = {}
-		cookie = self.request.cookies.get("user_id", "0")
-		if cookie:
-			if check_cookie_hash(cookie):
-				params = {"hello": "Hello, Matej"}
-		self.render_template('contact.html', params)
+		self.render_template('contact.html')
 
 	def post(self):
 		sender = self.request.get("sender")
@@ -161,8 +149,7 @@ class LoginHandler(Handler):
 			if user:
 				if User.check_password(password=password, password_hash=user.password_hash):
 					self.response.headers.add_header('Set-Cookie', 'user_id=%s' % hash_cookie(str(user.key.id())))
-					params = {"hello": "Hello, Matej"}
-					self.render_template('index.html', params)
+					self.render_template('index.html')
 				else:
 					params = {"error": "Password is incorrect"}
 					self.render_template('login.html', params)
