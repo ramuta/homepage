@@ -65,6 +65,7 @@ class MainHandler(Handler):
         markdowner = markdown2.Markdown()
 
         for post in posts:
+            post.text = post.text[:500] + "..."
             post.text = markdowner.convert(post.text)
             posts2.append(post)
 
@@ -94,6 +95,18 @@ class NewPostHandler(Handler):
         text = self.request.get("text")
         BlogPost.create(title, slug, text)
         return self.redirect_to("main")
+
+
+class BlogPostHandler(Handler):
+    def get(self, slug):
+        blog_post = BlogPost.query(BlogPost.slug == slug).get()
+
+        # markdown
+        markdowner = markdown2.Markdown()
+        blog_post.text = markdowner.convert(blog_post.text)
+
+        params = {"blog": blog_post}
+        self.render_template('blogpost.html', params)
 
 
 class ContactHandler(Handler):
@@ -161,37 +174,6 @@ class LogoutHandler(Handler):
         self.redirect(users.create_logout_url("/"))
 
 
-"""
-class LoginHandler(Handler):
-    def get(self):
-        User.init()
-        self.render('login.html')
-
-    def post(self):
-        email = self.request.get("email")
-        password = self.request.get("password")
-        if email and password:
-            user = User.query(User.email == email).get()
-            if user:
-                if User.check_password(password=password, password_hash=user.password_hash):
-                    self.response.headers.add_header('Set-Cookie', 'user_id=%s' % hash_cookie(str(user.key.id())))
-                    self.render_template('index.html')
-                else:
-                    params = {"error": "Password is incorrect"}
-                    self.render_template('login.html', params)
-            else:
-                params = {"error": "User with this email does not exist"}
-                self.render_template('login.html', params)
-        else:
-            params = {"error": "Please fill all the fields"}
-            self.render_template('login.html', params)
-
-
-class LogoutHandler(Handler):
-    def get(self):
-        self.response.headers.add_header('Set-Cookie', 'user_id=')
-        self.render('login.html')
-"""
 
 app = webapp2.WSGIApplication([
                                   webapp2.Route('/', MainHandler, name="main"),
@@ -200,5 +182,6 @@ app = webapp2.WSGIApplication([
                                   webapp2.Route('/login', LoginHandler),
                                   webapp2.Route('/logout', LogoutHandler),
                                   webapp2.Route('/new-post', NewPostHandler),
+                                  webapp2.Route('/blog/<slug:.+>', BlogPostHandler),
                                   webapp2.Route('/forbidden', ForbiddenHandler, name="forbidden"),
                               ], debug=True)

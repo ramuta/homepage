@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Contact me{% endblock title %}
+
+{% block maincontent %}
+
+	
+	<!-- +++++ Post +++++ -->
+	<div id="white">
+	    <div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+					<p><img src="../assets/img/jaz1.jpg" width="50px" height="50px" class="img-circle"> <ba>Matt Ramuta</ba></p>
+					<p><bd>{{ blog.datetime }}</bd></p>
+					<h1>{{ blog.title }}</h1>
+					{{ blog.text }}
+					<hr>
+					<p><a href="/"># Back</a></p>
+				</div>
+
+			</div><!-- /row -->
+	    </div> <!-- /container -->
+	</div><!-- /white -->
+	
+
+{% endblock maincontent %}
