@@ -3,27 +3,47 @@
 {% block title %}New post{% endblock title %}
 
 {% block scripts %}
+    <link rel="stylesheet" type="text/css" href="/assets/js/markitup/skins/markitup/style.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/js/markitup/sets/markdown/style.css" />
+
+    <script type="text/javascript" src="/assets/js/markitup/jquery.markitup.js"></script>
+    <script type="text/javascript" src="/assets/js/markitup/sets/markdown/set.js"></script>
+
+    <script language="javascript">
+        $(document).ready(function()	{
+            $('#markdown').markItUp(mySettings);
+        });
+    </script>
+
+    <!--
     <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
     <script>
             tinymce.init({selector:'textarea'});
     </script>
+    -->
 {% endblock scripts %}
 
 {% block maincontent %}
     <div class="container">
         <h1>New post</h1>
         <p>{{ error }}</p>
+
         <div class="row">
             <div class="col-lg-6">
                 <form action="/new-post" method="post">
                     <div class="form-group">
                         <label>Title</label>
-                        <input type="text" class="form-control" placeholder="Title" name="title">
+                        <input type="text" class="form-control" placeholder="Title" name="title" id="postTitle">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Slug</label>
+                        <input type="text" class="form-control" placeholder="Slug" name="slug" id="postSlug">
                     </div>
 
                     <div class="form-group">
                         <label>Post</label>
-                        <textarea class="form-control" style="height: 300px;" name="text"></textarea>
+                        <textarea class="form-control" style="height: 300px;" name="text" id="markdown"></textarea>
                     </div>
 
                     <button type="submit" class="btn btn-success">Submit</button>
