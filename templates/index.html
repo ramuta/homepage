@@ -3,20 +3,17 @@
 {% block title %}Matt Ramuta{% endblock title %}
 
 {% block maincontent%}
-
-
-
 <!-- +++++ Posts Lists +++++ -->
 	<!-- +++++ First Post +++++ -->
-
 	<div id="white">
 	    <div class="container">
             {% for post in posts %}
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2">
-					<p><img src="../assets/img/jaz1.jpg" width="50px" height="50px" class="img-circle"> <ba>Matt Ramuta</ba></p>
-					<!--<p><bd>January 18, 2014</bd></p>-->
-					<h1>{{ post.title }}</h1>
+					<p><img src="../assets/img/jaz1.jpg" width="50px" height="50px" class="img-circle">
+						<ba>Matt Ramuta</ba><br><bd>{{ post.datetime.strftime('%d %B %Y') }}</bd></p>
+
+					<h1><a href="/blog/{{ post.slug }}">{{ post.title }}</a></h1>
 
                     {{ post.text }}
 
@@ -29,22 +26,5 @@
             <br>
             {% endfor %}
 	    </div> <!-- /container -->
-	</div><!-- /grey -->
-
-
-
-	<!-- +++++ Third Post +++++
-	<div id="grey">
-	    <div class="container">
-			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2">
-					<p><img src="../assets/img/user.png" width="50px" height="50px"> <ba>Stanley Stinson</ba></p>
-					<p><bd>January 01, 2014</bd></p>
-					<h4>Believe In Yourself</h4>
-					<p class="bq">"A bird sitting on a tree is never afraid of the branch breaking, because her trust is not in the branch, but in her own wings."</p>
-				</div>
-
-			</div>
-	    </div>
 	</div><!-- /grey -->
 {% endblock maincontent%}

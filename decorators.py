@@ -1,14 +1,12 @@
 from google.appengine.api import users
 from webapp2 import redirect, redirect_to
-from secret import emails
 
 
 def login_required(handler):
     def check_login(self, *args, **kwargs):
         user = users.get_current_user()
         if user:
-            email = user.email()
-            if email in emails:
+            if users.is_current_user_admin():
                 return handler(self, *args, **kwargs)
             else:
                 return redirect_to("forbidden")
