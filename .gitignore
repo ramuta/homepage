@@ -4,3 +4,4 @@ venv
 *.pyc
 secret.py
 .netrc
+datastore

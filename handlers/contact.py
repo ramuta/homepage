@@ -11,8 +11,9 @@ class ContactHandler(Handler):
         subject = self.request.get("subject")
         email = self.request.get("email")
         text = self.request.get("text")
-        hidden = self.request.get("hidden")
-        if hidden:
+        hidden = self.request.get("skrito")
+
+        if hidden or "loan" in sender.lower() or "loan" in text.lower():
             return self.render_template("index.html")
 
         if sender and subject and email and text:
