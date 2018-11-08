@@ -1,28 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="/assets/img/r.jpg">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="shortcut icon" href="/assets/img/r.jpg">
 
-    <title>{% block title %}{% endblock title %} | Ramuta.me</title>
+        <title>{% block title %}{% endblock title %} | Ramuta.me</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="/assets/css/bootstrap.css" rel="stylesheet">
+        <!-- Bootstrap core CSS -->
+        <link href="/assets/css/bootstrap.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="/assets/css/main.css" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="/assets/css/main.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="/assets/js/hover.zoom.js"></script>
-    <script src="/assets/js/hover.zoom.conf.js"></script>
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="/assets/js/hover.zoom.js"></script>
+        <script src="/assets/js/hover.zoom.conf.js"></script>
 
-    {% block scripts %}
-    {% endblock scripts %}
-  </head>
+        {% block scripts %}
+        {% endblock scripts %}
+
+        <script src='https://www.google.com/recaptcha/api.js?render=6LcplXkUAAAAAAbRjgUmIY2_6hkIbPqK7Hy3IyvK'></script>
+
+        <script>
+            grecaptcha.ready(function() {
+                grecaptcha.execute('6LcplXkUAAAAAAbRjgUmIY2_6hkIbPqK7Hy3IyvK', {action: 'krneki'}).then(function(token) {
+                    // Verify the token on the server.
+                    document.getElementById("skrit").value = token;
+                });
+            });
+        </script>
+    </head>
 
   <body>
 
